@@ -21,6 +21,7 @@ def readFile(filename)
 	file.close
 	
 	$myinfo = info
+	
 end
 	
 
@@ -42,65 +43,58 @@ get '/' do # Root directory of web server.
 	
 	len3 = len2 - len1
 	
-	@info = @info + len3.to_s
+	@words = len3.to_s
 	
-	'<html><body>' +
-	'<b>Menu</b><br>' +
-	'<a href="/">Home</a><br>' +
-	'<a href="/create">Create</a><br>' +
-	'<a href="/about">About</a><br>' +
-	'<a href="/edit">Edit</a><br>' +
-	'<br><br>' + @info +
-	'</body></html>'
+	erb :home # Calls home view.
+	
 end
 
 get '/about' do # About page.
-	'<html><body>' +
-	'<b>Menu</b><br>' +
-	'<a href="/">Home</a><br>' +
-	'<a href="/create">Create</a><br>' +
-	'<a href="/about">About</a><br>' +
-	'<a href="/edit">Edit</a><br>' +
-	'<br><br>' +
-	'<h2>About us</h2>' +	
-	'<p>This wiki was created by </p>' + $myinfo +
-	'<p>Staff ID: 51773211</p>' +
-	'</body></html>'
+	
+	erb :about
+	
 end
 
 get '/create' do # Creat page.
-	'<html><body>' +	
-	'<b>Menu</b><br>' +	
-	'<a href="/">Home</a><br>' +	
-	'<a href="/create">Create</a><br>' +
-	'<a href="/about">About</a><br>' +
-	'<a href="/edit">Edit</a><br>' +
-	'<br><br>' +
-	'<h2>This is your own personal create page!</h2>' +	
-	'<section id="add">' + $myinfo + '</section>' +
-	'</body></html>'
+	
+	erb :create
+	
 end
 
 get '/edit' do # Edit page. Receives input and saves it into wiki.txt file.
+	
 	info = ""	
+	
 	file = File.open("wiki.txt")
+	
 	file.each do |line|	
+	
 			info = info + line			
+	
 	end
+	
 	file.close	
+	
 	@info = info	
 	
 	erb :edit
+
 end
 
 put '/edit' do # Functionality for the edit function.
 
 	info = "#{params[:message]}"
+	
 	@info = info
+	
 	file = File.open("wiki.txt", "w")
+	
 	file.puts @info
+	
 	file.close
+	
 	redirect '/'
+
 end
 
 not_found do # Redirect to root directory if directory does not exist.
@@ -108,4 +102,5 @@ not_found do # Redirect to root directory if directory does not exist.
 	status 404
 	
 	redirect '/'
+
 end
