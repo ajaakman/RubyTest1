@@ -89,13 +89,8 @@ get '/edit' do # Edit page. Receives input and saves it into wiki.txt file.
 	end
 	file.close	
 	@info = info	
-	'<h2>Edit article</h2><br>' +
-	'<form action="/edit" method = "post" id = "edit">' +
-	'<input type="hidden" name="_method" value = "put">' +
-	'<textarea rows="20" cols="90" name="message">' + @info + '</textarea>' +
-	'<input type="submit" value="Update">' +
-	'</form>' +
-	'<p><a href="../reset">Reset</a></p>'
+	
+	erb :edit
 end
 
 put '/edit' do # Functionality for the edit function.
